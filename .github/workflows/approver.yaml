@@ -32,4 +32,5 @@ jobs:
         uses: hmarr/auto-approve-action@v3
         if: ${{ (steps.status-check.outputs.actionOutput != 'fail') }}
         with:
+          github-token: ${{ secrets.BOT_PAT }}
           pull-request-number: ${{ github.event.pull_request.number }}
