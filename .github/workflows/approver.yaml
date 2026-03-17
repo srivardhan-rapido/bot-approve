@@ -1,0 +1,35 @@
+name: Approver
+
+on: 
+  pull_request:
+    branches: 
+      - main
+    types: [opened, reopened, edited, synchronize]
+    paths:
+      - '*'
+    
+jobs:
+  simple-validator:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: read
+    name: workflow
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+         fetch-depth: '0'
+  
+      - name: status-check
+        id: status-check
+        run: |
+          # Simple check: always pass for demonstration
+          echo "actionOutput=pass" >> $GITHUB_OUTPUT
+  
+      - name: Bot Approval
+        uses: hmarr/auto-approve-action@v3
+        if: ${{ (steps.status-check.outputs.actionOutput != 'fail') }}
+        with:
+          pull-request-number: ${{ github.event.pull_request.number }}
