@@ -3,7 +3,7 @@ name: Approver
 on: 
   pull_request:
     branches: 
-      - main
+      - master
     types: [opened, reopened, edited, synchronize]
     paths:
       - '*'
@@ -27,4 +27,4 @@ jobs:
         run: |
           # Simple check: always pass for demonstration
           echo "actionOutput=pass" >> $GITHUB_OUTPUT
-          exit 0
+          exit 1
