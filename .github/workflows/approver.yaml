@@ -3,7 +3,7 @@ name: Approver
 on: 
   pull_request:
     branches: 
-      - main
+      - master
     types: [opened, reopened, edited, synchronize]
     paths:
       - '*'
