@@ -27,7 +27,6 @@ jobs:
         run: |
           # Simple check: always pass for demonstration
           echo "actionOutput=pass" >> $GITHUB_OUTPUT
-          exit 1
   
       - name: Bot Approval
         uses: hmarr/auto-approve-action@v3
