@@ -6,8 +6,9 @@ on:
       - master
     types: [opened, reopened, edited, synchronize]
     paths:
-      - '*'
-    
+      - 'README.md'
+      - '**/README.md'
+
 jobs:
   simple-validator:
     runs-on: ubuntu-latest
