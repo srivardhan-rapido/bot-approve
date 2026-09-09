@@ -1,16 +1,33 @@
 name: Approver
 
-on: 
+on:
   pull_request:
-    branches: 
+    branches:
       - master
     types: [opened, reopened, edited, synchronize]
-    paths:
-      - 'README.md'
-      - '**/README.md'
 
 jobs:
+  detect-readme-change:
+    runs-on: ubuntu-latest
+    outputs:
+      readme_changed: ${{ steps.changed.outputs.any_changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+
+      - name: Find changed README files
+        id: changed
+        uses: tj-actions/changed-files@v47
+        with:
+          files: |
+            README.md
+            **/README.md
+
   simple-validator:
+    needs: detect-readme-change
+    if: needs.detect-readme-change.outputs.readme_changed == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -22,7 +39,7 @@ jobs:
         uses: actions/checkout@v4
         with:
          fetch-depth: '0'
-  
+
       - name: status-check
         id: status-check
         run: |
